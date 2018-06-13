@@ -32,7 +32,7 @@ public class IMServer implements Runnable, IMServerConfig {
 
     public void start() throws IOException {
         new Thread(this).start();
-        runServerCMD();
+//        runServerCMD();
     }
 
     private IMMessage getMessage() {
