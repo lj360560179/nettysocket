@@ -1,4 +1,4 @@
-package com.lj.nettysocket.client.config;
+package com.lj.nettysocket.clientTwo.config;
 
 import com.lj.nettysocket.struct.MessageType;
 
@@ -15,8 +15,8 @@ public interface IMClientConfig {
     /**消息相关*/
     byte APP_IM = 1;                //即时通信应用ID为1
 
-    int UID = 8888;
-    int DEFAULT_RECEIVE_ID = 9999;
+    int UID = 2;
+    int DEFAULT_RECEIVE_ID = 1;
 
     MessageType TYPE_MSG_AUTH = MessageType.TYPE_AUTH;         //连接后第一次消息确认建立连接和发送认证信息
     MessageType TYPE_MSG_TEXT = MessageType.TYPE_TEXT;         //文本消息

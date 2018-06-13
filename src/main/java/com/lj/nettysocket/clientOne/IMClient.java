@@ -1,7 +1,7 @@
-package com.lj.nettysocket.client;
+package com.lj.nettysocket.clientOne;
 
-import com.lj.nettysocket.client.config.IMClientConfig;
-import com.lj.nettysocket.client.handle.ClientHandler;
+import com.lj.nettysocket.clientOne.config.IMClientConfig;
+import com.lj.nettysocket.clientOne.handle.ClientHandler;
 import com.lj.nettysocket.codec.MsgPackDecode;
 import com.lj.nettysocket.codec.MsgPackEncode;
 import com.lj.nettysocket.struct.IMMessage;

@@ -1,6 +1,6 @@
-package com.lj.nettysocket.client.handle;
+package com.lj.nettysocket.clientTwo.handle;
 
-import com.lj.nettysocket.client.config.IMClientConfig;
+import com.lj.nettysocket.clientTwo.config.IMClientConfig;
 import com.lj.nettysocket.struct.IMMessage;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -34,7 +34,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter implements IMCli
         boolean result = msg.getMsg().equals("quit") ? false:true;
         if(result){
             /*if(msg.getMsgType() != MessageType.TYPE_AUTH.value()){
-                System.out.println("client[" + msg.getUid() + "]:" + msg.getMsg());
+                System.out.println("clientOne[" + msg.getUid() + "]:" + msg.getMsg());
             }*/
             ctx.writeAndFlush(msg);
         }
