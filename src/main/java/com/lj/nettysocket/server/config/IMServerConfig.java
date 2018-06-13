@@ -1,10 +1,12 @@
 package com.lj.nettysocket.server.config;
 
+import com.lj.nettysocket.struct.MessageType;
+
 /**
  * @Author lj
  * @Date 2018/6/13 14:10
  */
-public class IMServerConfig {
+public interface IMServerConfig {
     /**客户端配置*/
     int CLIENT_VERSION = 1;             //版本号
     /**服务端配置*/

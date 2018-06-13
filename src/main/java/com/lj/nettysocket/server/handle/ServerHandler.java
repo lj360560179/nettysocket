@@ -1,5 +1,8 @@
 package com.lj.nettysocket.server.handle;
 
+import com.lj.nettysocket.server.core.ApplicationContext;
+import com.lj.nettysocket.struct.IMMessage;
+import com.lj.nettysocket.struct.MessageType;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 

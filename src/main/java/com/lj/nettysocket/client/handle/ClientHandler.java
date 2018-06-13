@@ -1,10 +1,17 @@
 package com.lj.nettysocket.client.handle;
 
+import com.lj.nettysocket.client.config.IMClientConfig;
+import com.lj.nettysocket.struct.IMMessage;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+
+import java.io.IOException;
+
 /**
  * @Author lj
  * @Date 2018/6/13 14:21
  */
-public class ClientHandler extends ChannelInboundHandlerAdapter implements IMClientConfig{
+public class ClientHandler extends ChannelInboundHandlerAdapter implements IMClientConfig {
     private ChannelHandlerContext ctx;
 
     @Override
