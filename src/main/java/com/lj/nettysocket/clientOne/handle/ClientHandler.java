@@ -16,7 +16,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter implements IMCli
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("用户["+ UID + "]成功连接服务器");
+        System.out.println("用户[" + UID + "]成功连接服务器");
         this.ctx = ctx;
 
         //通道建立时发送认证消息给服务器
@@ -31,11 +31,8 @@ public class ClientHandler extends ChannelInboundHandlerAdapter implements IMCli
     }
 
     public boolean sendMsg(IMMessage msg) throws IOException {
-        boolean result = msg.getMsg().equals("quit") ? false:true;
-        if(result){
-            /*if(msg.getMsgType() != MessageType.TYPE_AUTH.value()){
-                System.out.println("clientOne[" + msg.getUid() + "]:" + msg.getMsg());
-            }*/
+        boolean result = msg.getMsg().equals("quit") ? false : true;
+        if (result) {
             ctx.writeAndFlush(msg);
         }
         return result;
@@ -43,7 +40,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter implements IMCli
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        IMMessage m = (IMMessage)msg;
+        IMMessage m = (IMMessage) msg;
         System.out.println("receive[" + m.getUid() + "]:" + m.getMsg());
     }
 

@@ -7,12 +7,18 @@ import com.lj.nettysocket.struct.MessageType;
  * @Date 2018/6/13 14:24
  */
 public interface IMClientConfig {
-    /**客户端配置*/
+    /**
+     * 客户端配置
+     */
     int CLIENT_VERSION = 1;         //版本号
-    /**服务端配置*/
+    /**
+     * 服务端配置
+     */
     String SERVER_HOST = "127.0.0.1";  //服务器IP
-    int  SERVER_PORT = 9090;           //服务器端口
-    /**消息相关*/
+    int SERVER_PORT = 9090;           //服务器端口
+    /**
+     * 消息相关
+     */
     byte APP_IM = 1;                //即时通信应用ID为1
 
     int UID = 1;

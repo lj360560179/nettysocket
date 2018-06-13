@@ -16,6 +16,7 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
@@ -28,6 +29,7 @@ public class IMServer implements Runnable, IMServerConfig {
 
     /**
      * 启动服务
+     *
      * @throws IOException
      */
     public void start() throws IOException {
@@ -36,6 +38,7 @@ public class IMServer implements Runnable, IMServerConfig {
 
     /**
      * 获取推送消息
+     *
      * @return
      */
     public IMMessage getMessage() {
@@ -46,6 +49,7 @@ public class IMServer implements Runnable, IMServerConfig {
 
     /**
      * 发送消息
+     *
      * @param msg
      * @return
      */

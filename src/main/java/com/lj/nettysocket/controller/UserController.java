@@ -2,6 +2,7 @@ package com.lj.nettysocket.controller;
 
 import com.lj.nettysocket.server.IMServer;
 import com.lj.nettysocket.server.core.ApplicationContext;
+import com.lj.nettysocket.struct.IMMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +26,9 @@ public class UserController {
 
     @GetMapping("/push")
     public void push(){
-
+        IMMessage msg = new IMMessage();
+        msg.setMsg("push");
+        server.sendMsg(msg);
     }
 
 
