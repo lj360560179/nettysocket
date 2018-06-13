@@ -19,16 +19,23 @@ public class UserController {
     @Autowired
     IMServer server;
 
+    /**
+     * 获取在线用户
+     * @return
+     */
     @GetMapping("/users")
     public Mono<Object> users() {
         return Mono.justOrEmpty(ApplicationContext.onlineUsers);
     }
 
+    /**
+     * 推送
+     */
     @GetMapping("/push")
     public void push(){
-        IMMessage msg = new IMMessage();
+        IMMessage msg = server.getMessage();
         msg.setMsg("push");
-        server.sendMsg(msg);
+        System.out.println(server.sendMsg(msg));
     }
 
 
