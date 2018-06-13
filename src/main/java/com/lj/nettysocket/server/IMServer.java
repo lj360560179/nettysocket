@@ -26,38 +26,30 @@ import java.util.Scanner;
  */
 public class IMServer implements Runnable, IMServerConfig {
 
-    public static void main(String[] args) throws IOException {
-        new IMServer().start();
-    }
-
+    /**
+     * 启动服务
+     * @throws IOException
+     */
     public void start() throws IOException {
         new Thread(this).start();
-//        runServerCMD();
     }
 
-    private IMMessage getMessage() {
+    /**
+     * 获取推送消息
+     * @return
+     */
+    public IMMessage getMessage() {
         int toID = -1;
-        IMMessage message = new IMMessage(
-                APP_IM,
-                CLIENT_VERSION,
-                SERVER_ID,
-                TYPE_MSG_TEXT.value(),
-                toID,
-                MSG_DEFAULT);
+        IMMessage message = new IMMessage(APP_IM, CLIENT_VERSION, SERVER_ID, TYPE_MSG_TEXT.value(), toID, MSG_DEFAULT);
         return message;
     }
 
-    private void runServerCMD() throws IOException {
-
-        Scanner scanner = new Scanner(System.in);
-        IMMessage message = null;
-        do {
-            message = getMessage();
-            message.setMsg(scanner.nextLine());
-        } while (sendMsg(message));
-    }
-
-    private boolean sendMsg(IMMessage msg) {
+    /**
+     * 发送消息
+     * @param msg
+     * @return
+     */
+    public boolean sendMsg(IMMessage msg) {
         // 当用户输入quit表示退出，不在进行推送
         boolean result = msg.getMsg().equals("quit") ? false : true;
         if (result) {
