@@ -14,12 +14,13 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.Scanner;
 
 /**
  * @Author lj
@@ -73,7 +74,6 @@ public class IMServer implements Runnable, IMServerConfig {
                     //解析失败则，默认发送所有
                     e.printStackTrace();
                 }
-
             }
 
             /**
@@ -91,9 +91,7 @@ public class IMServer implements Runnable, IMServerConfig {
                     System.out.println("推送消息：" + msg);
                     ctx.writeAndFlush(msg);
                 }
-
             }
-
         }
         return result;
     }
@@ -102,7 +100,6 @@ public class IMServer implements Runnable, IMServerConfig {
     public void run() {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
-
         try {
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
@@ -116,6 +113,7 @@ public class IMServer implements Runnable, IMServerConfig {
                             ch.pipeline().addLast("msgpack decoder", new MsgPackDecode());
                             ch.pipeline().addLast("frameEncoder", new LengthFieldPrepender(2));
                             ch.pipeline().addLast("msgpack encoder", new MsgPackEncode());
+
                             ch.pipeline().addLast(new ServerHandler());
                         }
                     });

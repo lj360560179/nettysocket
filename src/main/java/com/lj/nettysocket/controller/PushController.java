@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
  * @Date 2018/6/13 15:17
  */
 @RestController
-public class UserController {
+public class PushController {
 
     @Autowired
     IMServer server;
