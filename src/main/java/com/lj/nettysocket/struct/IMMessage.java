@@ -9,16 +9,26 @@ import org.msgpack.annotation.Message;
 @Message
 public class IMMessage {
 
-    //用户ID
+    /**
+     * 用户
+     */
     private int uid;
 
-    //消息类型 0：登录 1：文字消息
+
+    /**
+     * 消息类型
+     */
     private String msgType;
 
-    //接收方
+
+    /**
+     * 接收方
+     */
     private int receiveId;
 
-    //消息内容
+    /**
+     * 消息内容
+     */
     private String msg;
 
     public IMMessage(){
