@@ -83,7 +83,7 @@ public class IMServer implements Runnable, IMServerConfig {
                 System.out.println("推送消息给所有在线用户：" + msg);
                 for (Map.Entry<Integer, ChannelHandlerContext> entry : ApplicationContext.onlineUsers.entrySet()) {
                     ChannelHandlerContext c = entry.getValue();
-                    c.writeAndFlush(msg);
+                    c.writeAndFlush("ddddddd");
                 }
             } else {
                 ChannelHandlerContext ctx = ApplicationContext.getContext(receiveID);

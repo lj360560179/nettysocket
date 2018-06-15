@@ -35,7 +35,7 @@ public class PushController {
     public void push(){
         IMMessage msg = server.getMessage();
         msg.setMsg("push");
-        System.out.println(server.sendMsg(msg));
+        server.sendMsg(msg);
     }
 
 

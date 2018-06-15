@@ -31,7 +31,6 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         this.ctx = ctx;
         super.channelActive(ctx);
-        ApplicationContext.add(1, ctx);
         System.out.println("有客户端连接：" + ctx.channel().remoteAddress().toString());
     }
 
@@ -44,7 +43,8 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             ApplicationContext.add(message.getUid(), ctx);
         } else if (message.getMsgType().equals(MessageType.TYPE_TEXT.getValue())) {    //CHAT消息
             ChannelHandlerContext c = ApplicationContext.getContext(message.getReceiveId());
-            if (c == null) {           //接收方不在线，反馈给客户端
+
+            if (c == null || c.isRemoved()) {           //接收方不在线，反馈给客户端
                 message.setMsg("对方不在线！");
                 ctx.writeAndFlush(message);
             } else {                 //将消转发给接收方
