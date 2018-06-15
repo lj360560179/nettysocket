@@ -5,14 +5,22 @@ package com.lj.nettysocket.struct;
  * @Date 2018/6/13 14:24
  */
 public enum MessageType {
-    TYPE_AUTH((byte) 0), TYPE_LOGOUT((byte) 1), TYPE_TEXT((byte) 2), TYPE_EMPTY((byte) 3);
-    private byte value;
 
-    MessageType(byte value) {
+    SYSTEM("系统消息"),
+    TYPE_AUTH("认证消息"),
+    TYPE_TEXT("文本消息");
+
+    private String value;
+
+    private MessageType(String value){
         this.value = value;
     }
 
-    public byte value() {
-        return this.value;
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }

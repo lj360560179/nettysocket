@@ -44,7 +44,7 @@ public class IMServer implements Runnable, IMServerConfig {
      */
     public IMMessage getMessage() {
         int toID = -1;
-        IMMessage message = new IMMessage(APP_IM, CLIENT_VERSION, SERVER_ID, TYPE_MSG_TEXT.value(), toID, MSG_DEFAULT);
+        IMMessage message = new IMMessage(SERVER_ID, TYPE_MSG_TEXT.getValue(), toID, MSG_DEFAULT);
         return message;
     }
 
@@ -113,7 +113,6 @@ public class IMServer implements Runnable, IMServerConfig {
                             ch.pipeline().addLast("msgpack decoder", new MsgPackDecode());
                             ch.pipeline().addLast("frameEncoder", new LengthFieldPrepender(2));
                             ch.pipeline().addLast("msgpack encoder", new MsgPackEncode());
-
                             ch.pipeline().addLast(new ServerHandler());
                         }
                     });

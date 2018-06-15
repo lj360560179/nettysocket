@@ -20,22 +20,13 @@ public class ClientHandler extends ChannelInboundHandlerAdapter implements IMCli
         this.ctx = ctx;
 
         //通道建立时发送认证消息给服务器
-        IMMessage message = new IMMessage(
-                APP_IM,
-                CLIENT_VERSION,
-                UID,
-                TYPE_MSG_AUTH.value(),
-                DEFAULT_RECEIVE_ID,
-                MSG_DEFAULT);
+        IMMessage message = new IMMessage(UID, TYPE_MSG_AUTH.getValue(), DEFAULT_RECEIVE_ID, MSG_DEFAULT);
         sendMsg(message);
     }
 
     public boolean sendMsg(IMMessage msg) throws IOException {
         boolean result = msg.getMsg().equals("quit") ? false:true;
         if(result){
-            /*if(msg.getMsgType() != MessageType.TYPE_AUTH.value()){
-                System.out.println("clientOne[" + msg.getUid() + "]:" + msg.getMsg());
-            }*/
             ctx.writeAndFlush(msg);
         }
         return result;

@@ -9,8 +9,9 @@ import com.lj.nettysocket.struct.MessageType;
 public interface IMServerConfig {
     /**
      * 客户端配置
+     * 版本号
      */
-    int CLIENT_VERSION = 1;             //版本号
+    int CLIENT_VERSION = 1;
 
     /**
      * 服务端配置
@@ -27,10 +28,7 @@ public interface IMServerConfig {
      * 消息相关,表示服务器消息
      */
     int SERVER_ID = 0;
-    /**
-     * 即时通信应用ID为1
-     */
-    byte APP_IM = 1;
+
 
     /**
      * 连接后第一次消息确认建立连接和发送认证信息
