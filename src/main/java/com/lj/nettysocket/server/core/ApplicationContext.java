@@ -8,7 +8,8 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @Author lj
  * @Date 2018/6/13 14:09
- * 功能比较简单，主要用来保存登录用户信息，以Map来存储，其中key为用户ID，value为客户端对应的ChannelHandlerContext对象。
+ * 功能比较简单，主要用来保存登录用户信息，以Map来存储，
+ * 其中key为用户ID，value为客户端对应的ChannelHandlerContext对象。
  */
 public class ApplicationContext {
 

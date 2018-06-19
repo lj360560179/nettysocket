@@ -30,10 +30,12 @@ public class IMMessage {
      */
     private String msg;
 
-    public IMMessage(){}
+    public IMMessage() {
+    }
 
     /**
      * 构造方法
+     *
      * @param uid       用户ID
      * @param msgType   消息类型
      * @param receiveId 消息接收者
