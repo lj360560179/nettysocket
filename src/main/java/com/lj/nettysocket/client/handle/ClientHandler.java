@@ -1,6 +1,6 @@
-package com.lj.nettysocket.clientTwo.handle;
+package com.lj.nettysocket.client.handle;
 
-import com.lj.nettysocket.clientTwo.config.IMClientConfig;
+import com.lj.nettysocket.client.config.IMClientConfig;
 import com.lj.nettysocket.struct.IMMessage;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -16,7 +16,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter implements IMCli
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("用户["+ UID + "]成功连接服务器");
+        System.out.println("用户[" + UID + "]成功连接服务器");
         this.ctx = ctx;
 
         //通道建立时发送认证消息给服务器
@@ -25,8 +25,8 @@ public class ClientHandler extends ChannelInboundHandlerAdapter implements IMCli
     }
 
     public boolean sendMsg(IMMessage msg) throws IOException {
-        boolean result = msg.getMsg().equals("quit") ? false:true;
-        if(result){
+        boolean result = msg.getMsg().equals("quit") ? false : true;
+        if (result) {
             ctx.writeAndFlush(msg);
         }
         return result;
@@ -34,7 +34,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter implements IMCli
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        IMMessage m = (IMMessage)msg;
+        IMMessage m = (IMMessage) msg;
         System.out.println("receive[" + m.getUid() + "]:" + m.getMsg());
     }
 
