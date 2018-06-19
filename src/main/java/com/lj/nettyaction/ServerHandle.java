@@ -1,9 +1,13 @@
 package com.lj.nettyaction;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.CharsetUtil;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @Author lj
@@ -11,12 +15,11 @@ import io.netty.util.CharsetUtil;
  */
 public class ServerHandle extends ChannelInboundHandlerAdapter {
 
-
-
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        super.channelActive(ctx);
+        ctx.writeAndFlush(Unpooled.copiedBuffer("Netty rocks!", CharsetUtil.UTF_8));
     }
+
 
 
     @Override
