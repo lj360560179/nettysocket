@@ -20,7 +20,6 @@ public class IMMessage {
      */
     private String msgType;
 
-
     /**
      * 接收方
      */
@@ -31,9 +30,7 @@ public class IMMessage {
      */
     private String msg;
 
-    public IMMessage(){
-
-    }
+    public IMMessage(){}
 
     /**
      * 构造方法
@@ -43,7 +40,6 @@ public class IMMessage {
      * @param msg       消息内容
      */
     public IMMessage(int uid, String msgType, int receiveId, String msg) {
-
         this.uid = uid;
         this.msgType = msgType;
         this.receiveId = receiveId;
