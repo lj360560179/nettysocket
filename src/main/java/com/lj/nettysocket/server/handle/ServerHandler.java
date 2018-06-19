@@ -43,6 +43,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             ApplicationContext.add(message.getUid(), ctx);
         } else if (message.getMsgType().equals(MessageType.TYPE_TEXT.getValue())) {    //CHAT消息
             ChannelHandlerContext c = ApplicationContext.getContext(message.getReceiveId());
+
             if (c == null || c.isRemoved()) {           //接收方不在线，反馈给客户端
                 message.setMsg("对方不在线！");
                 ctx.writeAndFlush(message);
