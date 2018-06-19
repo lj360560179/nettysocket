@@ -16,9 +16,10 @@ import java.net.InetSocketAddress;
  */
 public class Server {
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws Exception {
+        new Server().start();
     }
+
     public void start() throws Exception {
         EventLoopGroup group = new NioEventLoopGroup();
         try {
