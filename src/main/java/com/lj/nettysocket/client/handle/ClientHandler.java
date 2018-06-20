@@ -37,9 +37,8 @@ public class ClientHandler extends ChannelInboundHandlerAdapter implements IMCli
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        ByteBuf in = (ByteBuf) msg;
-        PMessage message = JSON.parseObject(in.toString(CharsetUtil.UTF_8), PMessage.class);
-        LOGGER.info("receive[" + message.getUid() + "]:" + message.getMsg());
+        PMessage m = (PMessage) msg;
+        LOGGER.info("receive[" + m.getUid() + "]:" + m.getMsg());
     }
 
     @Override
@@ -51,8 +50,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter implements IMCli
     public boolean sendMsg(PMessage msg) throws IOException {
         boolean result = msg.getMsg().equals("quit") ? false : true;
         if (result) {
-            String m = JSON.toJSONString(msg);
-            ctx.writeAndFlush(Unpooled.copiedBuffer(m, CharsetUtil.UTF_8));
+            ctx.writeAndFlush(msg);
         }
         return result;
     }

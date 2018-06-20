@@ -3,6 +3,7 @@ package com.lj.nettysocket.server;
 
 import com.alibaba.fastjson.JSON;
 import com.lj.nettysocket.client.handle.ClientHandler;
+import com.lj.nettysocket.codec.JsonEncode;
 import com.lj.nettysocket.codec.MsgPackDecode;
 import com.lj.nettysocket.codec.MsgPackEncode;
 import com.lj.nettysocket.server.config.IMServerConfig;
@@ -64,20 +65,19 @@ public class IMServer implements Runnable, IMServerConfig {
      */
     public void sendMsg(PMessage msg) {
         int receiveID = msg.getReceiveId();
-        String content = JSON.toJSONString(msg);
         /**
          * 默认推送所有用户（默认receiveID为-1）
          * */
         if (receiveID == -1) {
             for (Map.Entry<Integer, ChannelHandlerContext> entry : ApplicationContext.onlineUsers.entrySet()) {
                 ChannelHandlerContext c = entry.getValue();
-                c.writeAndFlush(Unpooled.copiedBuffer(content, CharsetUtil.UTF_8));
+                c.writeAndFlush(msg);
             }
             LOGGER.info("推送消息给所有在线用户：" + msg);
         } else {
             ChannelHandlerContext ctx = ApplicationContext.getContext(receiveID);
             if (ctx != null) {
-                ctx.writeAndFlush(Unpooled.copiedBuffer(content, CharsetUtil.UTF_8));
+                ctx.writeAndFlush(msg);
                 LOGGER.info("推送消息：" + msg);
             }
         }
@@ -96,10 +96,10 @@ public class IMServer implements Runnable, IMServerConfig {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
-//                            ch.pipeline().addLast("frameDecoder", new LengthFieldBasedFrameDecoder(65536, 0, 2, 0, 2));
+                            ch.pipeline().addLast("frameDecoder", new LengthFieldBasedFrameDecoder(65536, 0, 2, 0, 2));
 //                            ch.pipeline().addLast("msgpack decoder", new MsgPackDecode());
-//                            ch.pipeline().addLast("frameEncoder", new LengthFieldPrepender(2));
-//                            ch.pipeline().addLast("msgpack encoder", new MsgPackEncode());
+                            ch.pipeline().addLast("frameEncoder", new LengthFieldPrepender(2));
+                            ch.pipeline().addLast("json encoder",new JsonEncode());
                             ch.pipeline().addLast(new ServerHandler());
                         }
                     });
