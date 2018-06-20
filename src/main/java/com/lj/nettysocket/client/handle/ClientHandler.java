@@ -1,17 +1,12 @@
 package com.lj.nettysocket.client.handle;
 
-import com.alibaba.fastjson.JSON;
+
 import com.lj.nettysocket.client.config.IMClientConfig;
-import com.lj.nettysocket.server.handle.ServerHandler;
 import com.lj.nettysocket.struct.PMessage;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 
 
