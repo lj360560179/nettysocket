@@ -1,7 +1,7 @@
-package com.lj.nettysocket.client.handle;
+package com.lj.nettysocket.javaclient.handle;
 
 
-import com.lj.nettysocket.client.config.IMClientConfig;
+import com.lj.nettysocket.javaclient.config.IMClientConfig;
 import com.lj.nettysocket.struct.PMessage;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

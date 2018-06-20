@@ -90,9 +90,9 @@ public class IMServer implements Runnable, IMServerConfig {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast("frameDecoder", new LengthFieldBasedFrameDecoder(65536, 0, 2, 0, 2));
+//                            ch.pipeline().addLast("frameDecoder", new LengthFieldBasedFrameDecoder(65536, 0, 2, 0, 2));
                             ch.pipeline().addLast("json decoder",new JsonDecode());
-                            ch.pipeline().addLast("frameEncoder", new LengthFieldPrepender(2));
+//                            ch.pipeline().addLast("frameEncoder", new LengthFieldPrepender(2));
                             ch.pipeline().addLast("json encoder",new JsonEncode());
                             ch.pipeline().addLast(new ServerHandler());
                         }

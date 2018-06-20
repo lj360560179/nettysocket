@@ -49,6 +49,15 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             if (m.getMsgType().equals(MessageType.TYPE_AUTH.getValue())) {
                 ApplicationContext.add(m.getUid(), ctx);
             }
+            if(m.getMsgType().equals(MessageType.TYPE_TEXT.getValue())){
+                ChannelHandlerContext c = ApplicationContext.getContext(m.getReceiveId());
+                if(c == null || c.isRemoved()){
+                    LOGGER.info("buzaixian");
+                    ctx.writeAndFlush(new PMessage("buzaixian"));
+                    return;
+                }
+                c.writeAndFlush(msg);
+            }
         }
     }
 

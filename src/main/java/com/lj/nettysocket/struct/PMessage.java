@@ -48,6 +48,9 @@ public class PMessage {
         this.msg = msg;
     }
 
+    public PMessage(String msg){
+        this.msg=msg;
+    }
 
     public int getUid() {
         return uid;

@@ -1,4 +1,4 @@
-package com.lj.nettysocket.client.config;
+package com.lj.nettysocket.javaclient.config;
 
 import com.lj.nettysocket.struct.MessageType;
 
