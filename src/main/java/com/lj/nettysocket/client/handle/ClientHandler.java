@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.lj.nettysocket.client.config.IMClientConfig;
 import com.lj.nettysocket.server.handle.ServerHandler;
 import com.lj.nettysocket.struct.PMessage;
+import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -36,8 +37,9 @@ public class ClientHandler extends ChannelInboundHandlerAdapter implements IMCli
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        PMessage m = JSON.parseObject((String) msg, PMessage.class);
-        LOGGER.info("receive[" + m.getUid() + "]:" + m.getMsg());
+        ByteBuf in = (ByteBuf) msg;
+        PMessage message = JSON.parseObject(in.toString(CharsetUtil.UTF_8), PMessage.class);
+        LOGGER.info("receive[" + message.getUid() + "]:" + message.getMsg());
     }
 
     @Override

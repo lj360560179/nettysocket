@@ -1,6 +1,7 @@
 package com.lj.nettysocket.server;
 
 
+import com.alibaba.fastjson.JSON;
 import com.lj.nettysocket.client.handle.ClientHandler;
 import com.lj.nettysocket.codec.MsgPackDecode;
 import com.lj.nettysocket.codec.MsgPackEncode;
@@ -9,6 +10,7 @@ import com.lj.nettysocket.server.core.ApplicationContext;
 import com.lj.nettysocket.server.handle.ServerHandler;
 import com.lj.nettysocket.struct.PMessage;
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -19,6 +21,7 @@ import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,21 +64,21 @@ public class IMServer implements Runnable, IMServerConfig {
      */
     public void sendMsg(PMessage msg) {
         int receiveID = msg.getReceiveId();
-        String content = msg.getMsg();
+        String content = JSON.toJSONString(msg);
         /**
          * 默认推送所有用户（默认receiveID为-1）
          * */
         if (receiveID == -1) {
-            LOGGER.info("推送消息给所有在线用户：" + msg);
             for (Map.Entry<Integer, ChannelHandlerContext> entry : ApplicationContext.onlineUsers.entrySet()) {
                 ChannelHandlerContext c = entry.getValue();
-                c.writeAndFlush(msg);
+                c.writeAndFlush(Unpooled.copiedBuffer(content, CharsetUtil.UTF_8));
             }
+            LOGGER.info("推送消息给所有在线用户：" + msg);
         } else {
             ChannelHandlerContext ctx = ApplicationContext.getContext(receiveID);
             if (ctx != null) {
+                ctx.writeAndFlush(Unpooled.copiedBuffer(content, CharsetUtil.UTF_8));
                 LOGGER.info("推送消息：" + msg);
-                ctx.writeAndFlush(msg);
             }
         }
     }
