@@ -1,17 +1,16 @@
 package com.lj.nettysocket.server;
 
 
-import com.alibaba.fastjson.JSON;
-import com.lj.nettysocket.client.handle.ClientHandler;
+
+import com.lj.nettysocket.codec.JsonDecode;
 import com.lj.nettysocket.codec.JsonEncode;
-import com.lj.nettysocket.codec.MsgPackDecode;
-import com.lj.nettysocket.codec.MsgPackEncode;
+
 import com.lj.nettysocket.server.config.IMServerConfig;
 import com.lj.nettysocket.server.core.ApplicationContext;
 import com.lj.nettysocket.server.handle.ServerHandler;
 import com.lj.nettysocket.struct.PMessage;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.buffer.Unpooled;
+
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -97,7 +96,7 @@ public class IMServer implements Runnable, IMServerConfig {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ch.pipeline().addLast("frameDecoder", new LengthFieldBasedFrameDecoder(65536, 0, 2, 0, 2));
-//                            ch.pipeline().addLast("msgpack decoder", new MsgPackDecode());
+                            ch.pipeline().addLast("json decoder",new JsonDecode());
                             ch.pipeline().addLast("frameEncoder", new LengthFieldPrepender(2));
                             ch.pipeline().addLast("json encoder",new JsonEncode());
                             ch.pipeline().addLast(new ServerHandler());

@@ -4,11 +4,8 @@ package com.lj.nettysocket.server.handle;
 import com.lj.nettysocket.server.core.ApplicationContext;
 import com.lj.nettysocket.struct.MessageType;
 import com.lj.nettysocket.struct.PMessage;
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import com.alibaba.fastjson.JSON;
-import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,12 +43,11 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        ByteBuf in = (ByteBuf) msg;
-        PMessage message = JSON.parseObject(in.toString(CharsetUtil.UTF_8), PMessage.class);
-        LOGGER.info(message.toString());
-        if (message != null) {
-            if (message.getMsgType().equals(MessageType.TYPE_AUTH.getValue())) {
-                ApplicationContext.add(message.getUid(), ctx);
+        PMessage m = (PMessage) msg;
+        LOGGER.info(m.toString());
+        if (m != null) {
+            if (m.getMsgType().equals(MessageType.TYPE_AUTH.getValue())) {
+                ApplicationContext.add(m.getUid(), ctx);
             }
         }
     }
