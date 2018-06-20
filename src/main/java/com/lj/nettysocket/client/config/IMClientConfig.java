@@ -20,12 +20,12 @@ public interface IMClientConfig {
     /**
      *
      */
-    int UID = 1;
+    int UID = 1001;
 
     /**
      *
      */
-    int DEFAULT_RECEIVE_ID = 2;
+    int DEFAULT_RECEIVE_ID = 1002;
 
     /**
      * 连接后第一次消息确认建立连接和发送认证信息

@@ -7,11 +7,6 @@ import com.lj.nettysocket.struct.MessageType;
  * @Date 2018/6/13 14:10
  */
 public interface IMServerConfig {
-    /**
-     * 客户端配置
-     * 版本号
-     */
-    int CLIENT_VERSION = 1;
 
     /**
      * 服务端配置

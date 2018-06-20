@@ -4,9 +4,13 @@ package com.lj.nettysocket.server.handle;
 import com.lj.nettysocket.server.core.ApplicationContext;
 import com.lj.nettysocket.struct.MessageType;
 import com.lj.nettysocket.struct.PMessage;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import com.alibaba.fastjson.JSON;
+import io.netty.util.CharsetUtil;
+
+import java.io.IOException;
 
 /**
  * @Author lj
@@ -38,11 +42,12 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        PMessage message = JSON.parseObject((String) msg, PMessage.class);
-        if(message != null){
-           if(message.getMsgType().equals(MessageType.TYPE_AUTH.getValue())){
-               ApplicationContext.add(message.getUid(),ctx);
-           }
+        ByteBuf in = (ByteBuf) msg;
+        PMessage message = JSON.parseObject(in.toString(CharsetUtil.UTF_8), PMessage.class);
+        if (message != null) {
+            if (message.getMsgType().equals(MessageType.TYPE_AUTH.getValue())) {
+                ApplicationContext.add(message.getUid(), ctx);
+            }
         }
     }
 
@@ -51,5 +56,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         System.out.println("与客户端断开连接:" + cause.getMessage());
         ctx.close();
     }
+
+
 
 }

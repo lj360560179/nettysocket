@@ -54,46 +54,25 @@ public class IMServer implements Runnable, IMServerConfig {
      * @param msg
      * @return
      */
-    public boolean sendMsg(PMessage msg) {
-        // 当用户输入quit表示退出，不在进行推送
-        boolean result = msg.getMsg().equals("quit") ? false : true;
-        if (result) {
-            int receiveID = msg.getReceiveId();
-            String content = msg.getMsg();
-            if (content.startsWith("#") && content.indexOf(":") != -1) {
-                try {
-                    /**
-                     * 用户输入指定的推送客户端
-                     * 输入文本格式为： ＂＃8888:发送内容＂
-                     * “#”和“：”之间内容为用户ID，“：”之后为推送消息内容
-                     */
-                    receiveID = Integer.valueOf(content.substring(1, content.indexOf(":")));
-                    msg.setReceiveId(receiveID);
-                    msg.setMsg(content.substring(content.indexOf(":")));
-                } catch (NumberFormatException e) {
-                    //解析失败则，默认发送所有
-                    e.printStackTrace();
-                }
+    public void sendMsg(PMessage msg) {
+        int receiveID = msg.getReceiveId();
+        String content = msg.getMsg();
+        /**
+         * 默认推送所有用户（默认receiveID为-1）
+         * */
+        if (receiveID == -1) {
+            System.out.println("推送消息给所有在线用户：" + msg);
+            for (Map.Entry<Integer, ChannelHandlerContext> entry : ApplicationContext.onlineUsers.entrySet()) {
+                ChannelHandlerContext c = entry.getValue();
+                c.writeAndFlush(msg);
             }
-
-            /**
-             * 默认推送所有用户（默认receiveID为-1）
-             * */
-            if (receiveID == -1) {
-                System.out.println("推送消息给所有在线用户：" + msg);
-                for (Map.Entry<Integer, ChannelHandlerContext> entry : ApplicationContext.onlineUsers.entrySet()) {
-                    ChannelHandlerContext c = entry.getValue();
-                    c.writeAndFlush(msg);
-                }
-            } else {
-                ChannelHandlerContext ctx = ApplicationContext.getContext(receiveID);
-                if (ctx != null) {
-                    System.out.println("推送消息：" + msg);
-                    ctx.writeAndFlush(msg);
-                }
+        } else {
+            ChannelHandlerContext ctx = ApplicationContext.getContext(receiveID);
+            if (ctx != null) {
+                System.out.println("推送消息：" + msg);
+                ctx.writeAndFlush(msg);
             }
         }
-        return result;
     }
 
     @Override

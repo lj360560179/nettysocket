@@ -2,8 +2,6 @@ package com.lj.nettysocket.client;
 
 import com.lj.nettysocket.client.config.IMClientConfig;
 import com.lj.nettysocket.client.handle.ClientHandler;
-import com.lj.nettysocket.codec.MsgPackDecode;
-import com.lj.nettysocket.codec.MsgPackEncode;
 import com.lj.nettysocket.struct.PMessage;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -13,8 +11,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.LengthFieldPrepender;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -53,10 +49,10 @@ public class IMClient implements Runnable,IMClientConfig {
                     .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         public void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast("frameDecoder", new LengthFieldBasedFrameDecoder(65536, 0, 2, 0, 2));
-                            ch.pipeline().addLast("msgpack decoder",new MsgPackDecode());
-                            ch.pipeline().addLast("frameEncoder", new LengthFieldPrepender(2));
-                            ch.pipeline().addLast("msgpack encoder",new MsgPackEncode());
+//                            ch.pipeline().addLast("frameDecoder", new LengthFieldBasedFrameDecoder(65536, 0, 2, 0, 2));
+//                            ch.pipeline().addLast("msgpack decoder",new MsgPackDecode());
+//                            ch.pipeline().addLast("frameEncoder", new LengthFieldPrepender(2));
+//                            ch.pipeline().addLast("msgpack encoder",new MsgPackEncode());
                             ch.pipeline().addLast(clientHandler);
                         }
                     });
