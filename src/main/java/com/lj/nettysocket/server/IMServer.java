@@ -1,6 +1,7 @@
 package com.lj.nettysocket.server;
 
 
+import com.lj.nettysocket.client.handle.ClientHandler;
 import com.lj.nettysocket.codec.MsgPackDecode;
 import com.lj.nettysocket.codec.MsgPackEncode;
 import com.lj.nettysocket.server.config.IMServerConfig;
@@ -18,6 +19,8 @@ import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Map;
@@ -27,6 +30,8 @@ import java.util.Map;
  * @Date 2018/6/13 14:21
  */
 public class IMServer implements Runnable, IMServerConfig {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(IMServer.class);
 
     /**
      * 启动服务
@@ -61,7 +66,7 @@ public class IMServer implements Runnable, IMServerConfig {
          * 默认推送所有用户（默认receiveID为-1）
          * */
         if (receiveID == -1) {
-            System.out.println("推送消息给所有在线用户：" + msg);
+            LOGGER.info("推送消息给所有在线用户：" + msg);
             for (Map.Entry<Integer, ChannelHandlerContext> entry : ApplicationContext.onlineUsers.entrySet()) {
                 ChannelHandlerContext c = entry.getValue();
                 c.writeAndFlush(msg);
@@ -69,7 +74,7 @@ public class IMServer implements Runnable, IMServerConfig {
         } else {
             ChannelHandlerContext ctx = ApplicationContext.getContext(receiveID);
             if (ctx != null) {
-                System.out.println("推送消息：" + msg);
+                LOGGER.info("推送消息：" + msg);
                 ctx.writeAndFlush(msg);
             }
         }
