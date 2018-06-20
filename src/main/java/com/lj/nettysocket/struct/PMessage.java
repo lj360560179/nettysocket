@@ -7,7 +7,7 @@ import org.msgpack.annotation.Message;
  * @Date 2018/6/13 14:23
  */
 @Message
-public class IMMessage {
+public class PMessage {
 
     /**
      * 用户
@@ -30,7 +30,7 @@ public class IMMessage {
      */
     private String msg;
 
-    public IMMessage() {
+    public PMessage() {
     }
 
     /**
@@ -41,7 +41,7 @@ public class IMMessage {
      * @param receiveId 消息接收者
      * @param msg       消息内容
      */
-    public IMMessage(int uid, String msgType, int receiveId, String msg) {
+    public PMessage(int uid, String msgType, int receiveId, String msg) {
         this.uid = uid;
         this.msgType = msgType;
         this.receiveId = receiveId;

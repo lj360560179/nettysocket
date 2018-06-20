@@ -1,6 +1,7 @@
 package com.lj.nettysocket.codec;
 
-import com.lj.nettysocket.struct.IMMessage;
+
+import com.lj.nettysocket.struct.PMessage;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
@@ -19,6 +20,6 @@ public class MsgPackDecode extends MessageToMessageDecoder<ByteBuf> {
         final int length = msg.readableBytes();
         final  byte[] array = new byte[length];
         msg.getBytes(msg.readerIndex(),array,0,length);
-        out.add(new MessagePack().read(array, IMMessage.class));
+        out.add(new MessagePack().read(array, PMessage.class));
     }
 }

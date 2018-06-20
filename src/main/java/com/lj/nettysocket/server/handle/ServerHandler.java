@@ -1,10 +1,12 @@
 package com.lj.nettysocket.server.handle;
 
+
 import com.lj.nettysocket.server.core.ApplicationContext;
-import com.lj.nettysocket.struct.IMMessage;
 import com.lj.nettysocket.struct.MessageType;
+import com.lj.nettysocket.struct.PMessage;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import com.alibaba.fastjson.JSON;
 
 /**
  * @Author lj
@@ -36,21 +38,11 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println(msg);
-        IMMessage message = (IMMessage) msg;
-        if (message.getMsgType().equals(MessageType.TYPE_AUTH.getValue())) {          //认证消息
-            System.out.println("认证消息：" + msg);
-            ApplicationContext.add(message.getUid(), ctx);
-        } else if (message.getMsgType().equals(MessageType.TYPE_TEXT.getValue())) {    //CHAT消息
-            ChannelHandlerContext c = ApplicationContext.getContext(message.getReceiveId());
-
-            if (c == null || c.isRemoved()) {           //接收方不在线，反馈给客户端
-                message.setMsg("对方不在线！");
-                ctx.writeAndFlush(message);
-            } else {                 //将消转发给接收方
-                System.out.println("转发消息：" + msg);
-                c.writeAndFlush(message);
-            }
+        PMessage message = JSON.parseObject((String) msg, PMessage.class);
+        if(message != null){
+           if(message.getMsgType().equals(MessageType.TYPE_AUTH.getValue())){
+               ApplicationContext.add(message.getUid(),ctx);
+           }
         }
     }
 

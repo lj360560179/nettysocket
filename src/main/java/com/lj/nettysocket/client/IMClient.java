@@ -4,7 +4,7 @@ import com.lj.nettysocket.client.config.IMClientConfig;
 import com.lj.nettysocket.client.handle.ClientHandler;
 import com.lj.nettysocket.codec.MsgPackDecode;
 import com.lj.nettysocket.codec.MsgPackEncode;
-import com.lj.nettysocket.struct.IMMessage;
+import com.lj.nettysocket.struct.PMessage;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -34,7 +34,7 @@ public class IMClient implements Runnable,IMClientConfig {
         runClientCMD();
     }
     public void runClientCMD() throws IOException{
-        IMMessage message = new IMMessage(UID, TYPE_MSG_TEXT.getValue(), DEFAULT_RECEIVE_ID, MSG_DEFAULT);
+        PMessage message = new PMessage(UID, TYPE_MSG_TEXT.getValue(), DEFAULT_RECEIVE_ID, MSG_DEFAULT);
         Scanner scanner = new Scanner(System.in);
         do{
             message.setMsg(scanner.nextLine());

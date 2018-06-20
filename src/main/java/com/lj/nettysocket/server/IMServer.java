@@ -6,7 +6,7 @@ import com.lj.nettysocket.codec.MsgPackEncode;
 import com.lj.nettysocket.server.config.IMServerConfig;
 import com.lj.nettysocket.server.core.ApplicationContext;
 import com.lj.nettysocket.server.handle.ServerHandler;
-import com.lj.nettysocket.struct.IMMessage;
+import com.lj.nettysocket.struct.PMessage;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -42,9 +42,9 @@ public class IMServer implements Runnable, IMServerConfig {
      *
      * @return
      */
-    public IMMessage getMessage() {
+    public PMessage getMessage() {
         int toID = -1;
-        IMMessage message = new IMMessage(SERVER_ID, TYPE_MSG_TEXT.getValue(), toID, MSG_DEFAULT);
+        PMessage message = new PMessage(SERVER_ID, TYPE_MSG_TEXT.getValue(), toID, MSG_DEFAULT);
         return message;
     }
 
@@ -54,7 +54,7 @@ public class IMServer implements Runnable, IMServerConfig {
      * @param msg
      * @return
      */
-    public boolean sendMsg(IMMessage msg) {
+    public boolean sendMsg(PMessage msg) {
         // 当用户输入quit表示退出，不在进行推送
         boolean result = msg.getMsg().equals("quit") ? false : true;
         if (result) {
@@ -109,10 +109,10 @@ public class IMServer implements Runnable, IMServerConfig {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast("frameDecoder", new LengthFieldBasedFrameDecoder(65536, 0, 2, 0, 2));
-                            ch.pipeline().addLast("msgpack decoder", new MsgPackDecode());
-                            ch.pipeline().addLast("frameEncoder", new LengthFieldPrepender(2));
-                            ch.pipeline().addLast("msgpack encoder", new MsgPackEncode());
+//                            ch.pipeline().addLast("frameDecoder", new LengthFieldBasedFrameDecoder(65536, 0, 2, 0, 2));
+//                            ch.pipeline().addLast("msgpack decoder", new MsgPackDecode());
+//                            ch.pipeline().addLast("frameEncoder", new LengthFieldPrepender(2));
+//                            ch.pipeline().addLast("msgpack encoder", new MsgPackEncode());
                             ch.pipeline().addLast(new ServerHandler());
                         }
                     });

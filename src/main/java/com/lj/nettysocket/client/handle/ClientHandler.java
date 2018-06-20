@@ -1,7 +1,7 @@
 package com.lj.nettysocket.client.handle;
 
 import com.lj.nettysocket.client.config.IMClientConfig;
-import com.lj.nettysocket.struct.IMMessage;
+import com.lj.nettysocket.struct.PMessage;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -20,11 +20,11 @@ public class ClientHandler extends ChannelInboundHandlerAdapter implements IMCli
         this.ctx = ctx;
 
         //通道建立时发送认证消息给服务器
-        IMMessage message = new IMMessage(UID, TYPE_MSG_AUTH.getValue(), DEFAULT_RECEIVE_ID, MSG_DEFAULT);
+        PMessage message = new PMessage(UID, TYPE_MSG_AUTH.getValue(), DEFAULT_RECEIVE_ID, MSG_DEFAULT);
         sendMsg(message);
     }
 
-    public boolean sendMsg(IMMessage msg) throws IOException {
+    public boolean sendMsg(PMessage msg) throws IOException {
         boolean result = msg.getMsg().equals("quit") ? false : true;
         if (result) {
             ctx.writeAndFlush(msg);
@@ -34,7 +34,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter implements IMCli
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        IMMessage m = (IMMessage) msg;
+        PMessage m = (PMessage) msg;
         System.out.println("receive[" + m.getUid() + "]:" + m.getMsg());
     }
 

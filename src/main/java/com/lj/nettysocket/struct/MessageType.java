@@ -6,7 +6,6 @@ package com.lj.nettysocket.struct;
  */
 public enum MessageType {
 
-    SYSTEM("系统消息"),
     TYPE_AUTH("认证消息"),
     TYPE_TEXT("文本消息");
 
