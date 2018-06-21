@@ -20,7 +20,6 @@ func Start(tcpAddrStr string) {
 		return
 	}
 
-	// 向服务器拨号
 	conn, err := net.DialTCP("tcp", nil, tcpAddr)
 	if err != nil {
 		log.Printf("Dial to server failed: %v\n", err)
