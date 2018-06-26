@@ -7,6 +7,7 @@ import com.lj.nettysocket.codec.JsonEncode;
 import com.lj.nettysocket.server.config.IMServerConfig;
 import com.lj.nettysocket.server.core.ApplicationContext;
 import com.lj.nettysocket.server.handle.ServerHandler;
+import com.lj.nettysocket.struct.Msg;
 import com.lj.nettysocket.struct.PMessage;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -15,6 +16,10 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import org.slf4j.Logger;
@@ -57,7 +62,7 @@ public class IMServer implements Runnable, IMServerConfig {
      * @param msg
      * @return
      */
-    public void sendMsg(PMessage msg) {
+    public void sendMsg(Msg msg) {
         int receiveID = msg.getReceiveId();
         /**
          * 默认推送所有用户（默认receiveID为-1）
@@ -90,9 +95,18 @@ public class IMServer implements Runnable, IMServerConfig {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast("json decoder",new JsonDecode());
-                            ch.pipeline().addLast("json encoder",new JsonEncode());
+
+                            // ----Protobuf处理器，这里的配置是关键----
+                            ch.pipeline().addLast("frameDecoder", new ProtobufVarint32FrameDecoder());// 用于decode前解决半包和粘包问题（利用包头中的包含数组长度来识别半包粘包）
+                            //配置Protobuf解码处理器，消息接收到了就会自动解码，ProtobufDecoder是netty自带的，Message是自己定义的Protobuf类
+                            ch.pipeline().addLast("protobufDecoder", new ProtobufDecoder(Msg.getDefaultInstance()));
+                            // 用于在序列化的字节数组前加上一个简单的包头，只包含序列化的字节长度。
+                            ch.pipeline().addLast("frameEncoder", new ProtobufVarint32LengthFieldPrepender());
+                            //配置Protobuf编码器，发送的消息会先经过编码
+                            ch.pipeline().addLast("protobufEncoder", new ProtobufEncoder());
+                            // ----Protobuf处理器END----
                             ch.pipeline().addLast(new ServerHandler());
+
                         }
                     });
             ChannelFuture f = b.bind(SERVER_PORT).sync();

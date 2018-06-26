@@ -3,7 +3,7 @@
 
 package com.lj.nettysocket.struct;
 
-import com.google.protobuf.MsgOrBuilder;
+
 
 /**
  * Protobuf type {@code google.protobuf.Msg}

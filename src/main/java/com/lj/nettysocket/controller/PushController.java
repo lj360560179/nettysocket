@@ -2,6 +2,8 @@ package com.lj.nettysocket.controller;
 
 import com.lj.nettysocket.server.IMServer;
 import com.lj.nettysocket.server.core.ApplicationContext;
+import com.lj.nettysocket.struct.MessageType;
+import com.lj.nettysocket.struct.Msg;
 import com.lj.nettysocket.struct.PMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,8 +35,9 @@ public class PushController {
      */
     @GetMapping("/push")
     public void push(){
-        PMessage msg = server.getMessage();
-        msg.setMsg("push");
+
+        Msg.Builder s = Msg.newBuilder();
+        Msg msg = s.setMsgType(MessageType.TYPE_TEXT.getValue()).setReceiveId(-1).setUid(0).setMsg("push").build();
         server.sendMsg(msg);
     }
 

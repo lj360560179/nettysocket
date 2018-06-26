@@ -4,6 +4,7 @@ import com.lj.nettysocket.javaclient.config.IMClientConfig;
 import com.lj.nettysocket.javaclient.handle.ClientHandler;
 import com.lj.nettysocket.codec.JsonDecode;
 import com.lj.nettysocket.codec.JsonEncode;
+import com.lj.nettysocket.struct.Msg;
 import com.lj.nettysocket.struct.PMessage;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -13,6 +14,10 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -32,12 +37,13 @@ public class IMClient implements Runnable,IMClientConfig {
         runClientCMD();
     }
     public void runClientCMD() throws IOException{
-        PMessage message = new PMessage(UID, TYPE_MSG_TEXT.getValue(), DEFAULT_RECEIVE_ID, MSG_DEFAULT);
+        Msg.Builder s = Msg.newBuilder();
+        s.setMsgType(TYPE_MSG_TEXT.getValue()).setReceiveId(DEFAULT_RECEIVE_ID).setUid(UID).setMsg(MSG_DEFAULT).build();
         Scanner scanner = new Scanner(System.in);
         do{
-            message.setMsg(scanner.nextLine());
+            s.setMsg(scanner.nextLine());
         }
-        while (clientHandler.sendMsg(message));
+        while (clientHandler.sendMsg(s.build()));
     }
 
     @Override
@@ -51,8 +57,15 @@ public class IMClient implements Runnable,IMClientConfig {
                     .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         public void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast("json decoder",new JsonDecode());
-                            ch.pipeline().addLast("json encoder",new JsonEncode());
+                            // ----Protobuf处理器，这里的配置是关键----
+                            ch.pipeline().addLast("frameDecoder", new ProtobufVarint32FrameDecoder());// 用于decode前解决半包和粘包问题（利用包头中的包含数组长度来识别半包粘包）
+                            //配置Protobuf解码处理器，消息接收到了就会自动解码，ProtobufDecoder是netty自带的，Message是自己定义的Protobuf类
+                            ch.pipeline().addLast("protobufDecoder", new ProtobufDecoder(Msg.getDefaultInstance()));
+                            // 用于在序列化的字节数组前加上一个简单的包头，只包含序列化的字节长度。
+                            ch.pipeline().addLast("frameEncoder", new ProtobufVarint32LengthFieldPrepender());
+                            //配置Protobuf编码器，发送的消息会先经过编码
+                            ch.pipeline().addLast("protobufEncoder", new ProtobufEncoder());
+                            // ----Protobuf处理器END----
                             ch.pipeline().addLast(clientHandler);
                         }
                     });

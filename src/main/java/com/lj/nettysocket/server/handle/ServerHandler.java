@@ -3,6 +3,7 @@ package com.lj.nettysocket.server.handle;
 
 import com.lj.nettysocket.server.core.ApplicationContext;
 import com.lj.nettysocket.struct.MessageType;
+import com.lj.nettysocket.struct.Msg;
 import com.lj.nettysocket.struct.PMessage;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -43,7 +44,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        PMessage m = (PMessage) msg;
+        Msg m = (Msg) msg;
         LOGGER.info(m.toString());
         if (m != null) {
             if (m.getMsgType().equals(MessageType.TYPE_AUTH.getValue())) {
@@ -53,7 +54,9 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                 ChannelHandlerContext c = ApplicationContext.getContext(m.getReceiveId());
                 if(c == null || c.isRemoved()){
                     LOGGER.info("buzaixian");
-                    ctx.writeAndFlush(new PMessage("buzaixian"));
+                    Msg.Builder s = Msg.newBuilder();
+                    s.setMsgType(MessageType.TYPE_TEXT.getValue()).setReceiveId(m.getUid()).setUid(0).setMsg("buzaixian");
+                    ctx.writeAndFlush(s.build());
                     return;
                 }
                 c.writeAndFlush(msg);
