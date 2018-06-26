@@ -21,6 +21,7 @@ public  final class Msg extends
     msg_ = "";
   }
 
+
   @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
@@ -357,7 +358,8 @@ public  final class Msg extends
     Builder builder = new Builder(parent);
     return builder;
   }
-  /**
+
+    /**
    * Protobuf type {@code google.protobuf.Msg}
    */
   public static final class Builder extends
