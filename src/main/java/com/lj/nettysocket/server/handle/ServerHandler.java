@@ -1,10 +1,9 @@
 package com.lj.nettysocket.server.handle;
 
 
+import com.lj.nettysocket.proto.Msg;
 import com.lj.nettysocket.server.core.ApplicationContext;
 import com.lj.nettysocket.struct.MessageType;
-import com.lj.nettysocket.struct.Msg;
-import com.lj.nettysocket.struct.PMessage;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.slf4j.Logger;

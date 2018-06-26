@@ -2,20 +2,16 @@ package com.lj.nettysocket.server;
 
 
 
-import com.lj.nettysocket.codec.JsonDecode;
-import com.lj.nettysocket.codec.JsonEncode;
+import com.lj.nettysocket.proto.Msg;
 import com.lj.nettysocket.server.config.IMServerConfig;
 import com.lj.nettysocket.server.core.ApplicationContext;
 import com.lj.nettysocket.server.handle.ServerHandler;
-import com.lj.nettysocket.struct.Msg;
 import com.lj.nettysocket.struct.PMessage;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;

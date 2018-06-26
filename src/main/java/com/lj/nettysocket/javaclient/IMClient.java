@@ -2,10 +2,7 @@ package com.lj.nettysocket.javaclient;
 
 import com.lj.nettysocket.javaclient.config.IMClientConfig;
 import com.lj.nettysocket.javaclient.handle.ClientHandler;
-import com.lj.nettysocket.codec.JsonDecode;
-import com.lj.nettysocket.codec.JsonEncode;
-import com.lj.nettysocket.struct.Msg;
-import com.lj.nettysocket.struct.PMessage;
+import com.lj.nettysocket.proto.Msg;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
