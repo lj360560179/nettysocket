@@ -51,11 +51,15 @@ public class IMClient implements Runnable,IMClientConfig {
                     .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         public void initChannel(SocketChannel ch) throws Exception {
-                           // ch.pipeline().addLast("frameDecoder", new LengthFieldBasedFrameDecoder(65536, 0, 2, 0, 2));
-                            ch.pipeline().addLast("json decoder",new JsonDecode());
-                           //  ch.pipeline().addLast("frameEncoder", new LengthFieldPrepender(2));
-                            ch.pipeline().addLast("json encoder",new JsonEncode());
+
+                            //-----json-----
+//                            ch.pipeline().addLast("json decoder",new JsonDecode());
+//                            ch.pipeline().addLast("json encoder",new JsonEncode());
+                            //-----json-----
+
+
                             ch.pipeline().addLast(clientHandler);
+
                         }
                     });
             ChannelFuture f = b.connect(SERVER_HOST, SERVER_PORT).sync();
