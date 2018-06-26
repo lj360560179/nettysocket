@@ -49,7 +49,7 @@ public class IMServer implements Runnable, IMServerConfig {
     public Msg getMessage() {
         int toID = -1;
         Msg.Builder s = Msg.newBuilder();
-        s.setMsgType(MessageType.TYPE_TEXT.getValue().toString()).setReceiveId(toID).setUid(0).setMsg("");
+        s.setMsgType(MessageType.TYPE_TEXT.getValue()).setReceiveId(toID).setUid(0).setMsg("");
         return s.build();
     }
 
