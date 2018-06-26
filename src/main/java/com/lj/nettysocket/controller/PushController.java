@@ -1,5 +1,6 @@
 package com.lj.nettysocket.controller;
 
+import com.lj.nettysocket.proto.Msg;
 import com.lj.nettysocket.server.IMServer;
 import com.lj.nettysocket.server.core.ApplicationContext;
 import com.lj.nettysocket.struct.MessageType;
@@ -33,9 +34,8 @@ public class PushController {
      */
     @GetMapping("/push")
     public void push(){
-
         Msg.Builder s = Msg.newBuilder();
-        Msg msg = s.setMsgType(MessageType.TYPE_TEXT.getValue()).setReceiveId(-1).setUid(0).setMsg("push").build();
+        Msg msg = s.setMsgType(MessageType.TYPE_TEXT.getValue().toString()).setReceiveId(-1).setUid(0).setMsg("push").build();
         server.sendMsg(msg);
     }
 

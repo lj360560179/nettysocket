@@ -35,7 +35,7 @@ public class IMClient implements Runnable,IMClientConfig {
     }
     public void runClientCMD() throws IOException{
         Msg.Builder s = Msg.newBuilder();
-        s.setMsgType(TYPE_MSG_TEXT.getValue()).setReceiveId(DEFAULT_RECEIVE_ID).setUid(UID).setMsg(MSG_DEFAULT).build();
+        s.setMsgType(TYPE_MSG_TEXT.getValue().toString()).setReceiveId(DEFAULT_RECEIVE_ID).setUid(UID).setMsg(MSG_DEFAULT).build();
         Scanner scanner = new Scanner(System.in);
         do{
             s.setMsg(scanner.nextLine());

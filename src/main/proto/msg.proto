@@ -36,6 +36,7 @@ package google.protobuf;
 option java_package = "com.lj.nettysocket.proto";
 option java_outer_classname = "MsgProto";
 option java_multiple_files = true;
+option objc_class_prefix = "UTF-8";
 option go_package = "google.golang.org/genproto/protobuf/ptype;ptype";
 
 message Msg {

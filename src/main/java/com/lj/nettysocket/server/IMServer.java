@@ -6,7 +6,7 @@ import com.lj.nettysocket.proto.Msg;
 import com.lj.nettysocket.server.config.IMServerConfig;
 import com.lj.nettysocket.server.core.ApplicationContext;
 import com.lj.nettysocket.server.handle.ServerHandler;
-import com.lj.nettysocket.struct.PMessage;
+import com.lj.nettysocket.struct.MessageType;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -46,10 +46,11 @@ public class IMServer implements Runnable, IMServerConfig {
      *
      * @return
      */
-    public PMessage getMessage() {
+    public Msg getMessage() {
         int toID = -1;
-        PMessage message = new PMessage(SERVER_ID, TYPE_MSG_TEXT.getValue(), toID, MSG_DEFAULT);
-        return message;
+        Msg.Builder s = Msg.newBuilder();
+        s.setMsgType(MessageType.TYPE_TEXT.getValue().toString()).setReceiveId(toID).setUid(0).setMsg("");
+        return s.build();
     }
 
     /**

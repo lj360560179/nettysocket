@@ -30,9 +30,10 @@ public final class MsgProto {
     String[] descriptorData = {
       "\n\tmsg.proto\022\017google.protobuf\"C\n\003Msg\022\013\n\003u" +
       "id\030\001 \001(\005\022\021\n\treceiveId\030\002 \001(\005\022\017\n\007msgType\030\003" +
-      " \001(\t\022\013\n\003msg\030\004 \001(\tBW\n\030com.lj.nettysocket." +
+      " \001(\t\022\013\n\003msg\030\004 \001(\tB_\n\030com.lj.nettysocket." +
       "protoB\010MsgProtoP\001Z/google.golang.org/gen" +
-      "proto/protobuf/ptype;ptypeb\006proto3"
+      "proto/protobuf/ptype;ptype\242\002\005UTF-8b\006prot" +
+      "o3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
