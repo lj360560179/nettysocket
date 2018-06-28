@@ -24,12 +24,6 @@ public interface IMServerConfig {
      */
     int SERVER_ID = 0;
 
-
-    /**
-     * 连接后第一次消息确认建立连接和发送认证信息
-     */
-    MessageType TYPE_MSG_CONNECT = MessageType.TYPE_AUTH;
-
     /**
      * 文本消息
      */
